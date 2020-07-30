@@ -1,0 +1,8 @@
+FROM docker.io/golang:alpine AS builder
+WORKDIR /go/src/drone-docker/
+ADD . .
+RUN go build -o drone-azoya cmd/drone-azoya-harbor/main.go
+
+FROM plugins/docker:linux-amd64
+COPY --from=builder /go/src/drone-docker/drone-azoya /bin/drone-azoya
+ENTRYPOINT ["/usr/local/bin/dockerd-entrypoint.sh", "/bin/drone-azoya"]
