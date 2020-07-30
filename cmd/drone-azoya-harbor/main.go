@@ -27,7 +27,7 @@ func main() {
 	os.Setenv("DOCKER_USERNAME", username)
 	os.Setenv("DOCKER_PASSWORD", password)
 
-	cmd := exec.Command("drone-docker", "-daemon.off=1")
+	cmd := exec.Command("drone-docker")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
