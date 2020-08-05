@@ -6,15 +6,27 @@ import (
 	"path"
 )
 
+const (
+	DEFAULT_REGISTRY = "hub.azoyagroup.com"
+)
+
 func main() {
 	var (
-		registry = "hub.azoyagroup.com"
+		repo     = os.Getenv("PLUGIN_REPO")
+		registry = os.Getenv("PLUGIN_REGISTRY")
 		username = os.Getenv("PLUGIN_USERNAME")
 		password = os.Getenv("PLUGIN_PASSWORD")
 	)
 
+	if registry == "" {
+		registry = DEFAULT_REGISTRY
+	}
+	if repo == "" {
+		repo = path.Join(registry, "azoya", os.Getenv("DRONE_REPO_NAME"))
+	}
+
 	os.Setenv("PLUGIN_REGISTRY", registry)
-	os.Setenv("PLUGIN_REPO", path.Join(registry, "azoya", os.Getenv("DRONE_REPO_NAME")))
+	os.Setenv("PLUGIN_REPO", repo)
 
 	// 如果未配置，默认使用运维账号权限
 	if username == "" {
