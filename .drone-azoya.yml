@@ -6,7 +6,8 @@ steps:
 - name: publish
   image: plugins/docker
   settings:
-    tags: latest
+    #tags: latest
+    tags: v2.0.0 
     dockerfile: docker/azoya-harbor/Dockerfile.linux.amd64
     username: 
       from_secret: harbor_user
