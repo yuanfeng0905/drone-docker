@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"strings"
 )
 
 const (
@@ -26,6 +27,8 @@ func genTag() (ret string, err error) {
 		err = errors.New("[ERR] current branch is empty.")
 		return
 	}
+	// 替换特殊字符
+	curBranch = strings.ReplaceAll(curBranch, "/", "-")
 
 	curTag := "latest" // default tag
 	if tag != "" {
