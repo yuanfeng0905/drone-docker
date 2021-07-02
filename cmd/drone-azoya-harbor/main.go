@@ -17,8 +17,11 @@ const (
 func genTag() (ret string, err error) {
 	curBranch := os.Getenv("DRONE_BRANCH") // 当前构建的分支
 	gitTag := os.Getenv("DRONE_TAG")       // git仓库触发tag
-	tag := os.Getenv("PLUGIN_TAG")         // 用户自定义tag参数（兼容模式）
-	bn := os.Getenv("DRONE_BUILD_NUMBER")  // 构建流水号
+	tag := os.Getenv("PLUGIN_TAGS")        // 用户自定义tag参数（兼容模式）
+	if tag == "" {
+		tag = os.Getenv("PLUGIN_TAG")
+	}
+	bn := os.Getenv("DRONE_BUILD_NUMBER") // 构建流水号
 
 	if curBranch == "" && gitTag != "" {
 		curBranch = "master" //tag 事件时，branch为空
